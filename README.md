@@ -1,125 +1,115 @@
-# Fake Review Detection - Frontend
+# Fake Review Detection - Backend API
 
-React + TypeScript + Vite frontend for the Fake Review Detection system.
+Flask-based REST API for detecting fake reviews using machine learning.
 
 ## 🚀 Features
 
-- Modern React 18 with TypeScript
-- Supabase authentication and database
-- Beautiful UI with Tailwind CSS and shadcn/ui
-- Data visualization with Recharts
-- Form handling with React Hook Form
-- Responsive design
+- Machine learning model for fake review detection
+- TF-IDF vectorization for text processing
+- REST API endpoints for predictions
+- NLTK-based text preprocessing
 
 ## 📋 Prerequisites
 
-- Node.js 18+
-- npm or yarn
-- Supabase account
+- Python 3.8+
+- pip
 
 ## 🛠️ Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/hitesh-patgar/fake-review-frontend.git
-cd fake-review-frontend
+git clone https://github.com/hitesh-patgar/fake-review-backend.git
+cd fake-review-backend
 ```
 
-2. Install dependencies:
+2. Create a virtual environment:
 ```bash
-npm install
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-3. Create `.env` file:
+3. Install dependencies:
 ```bash
-cp .env.example .env
+pip install -r requirements.txt
 ```
 
-4. Update `.env` with your Supabase credentials:
-```env
-VITE_SUPABASE_URL="your-supabase-url"
-VITE_SUPABASE_PUBLISHABLE_KEY="your-supabase-anon-key"
+4. Download NLTK data (if needed):
+```python
+python -c "import nltk; nltk.download('stopwords')"
 ```
 
 ## 🏃 Running Locally
 
 ```bash
-npm run dev
+python backend_api.py
 ```
 
-The app will be available at `http://localhost:5173`
+The API will be available at `http://localhost:5000`
 
-## 🏗️ Build
+## 📡 API Endpoints
 
-```bash
-npm run build
+### POST /predict
+Predict if a review is fake or genuine.
+
+**Request:**
+```json
+{
+  "review": "This product is amazing! Best purchase ever!"
+}
+```
+
+**Response:**
+```json
+{
+  "label": "genuine"
+}
+```
+
+### POST /detect-fake-review
+Enhanced endpoint with additional metadata.
+
+**Request:**
+```json
+{
+  "review": "This product is amazing! Best purchase ever!"
+}
+```
+
+**Response:**
+```json
+{
+  "label": "genuine",
+  "is_fake": false
+}
 ```
 
 ## 🚢 Deployment
 
-### Vercel
+### Render
 
-1. Install Vercel CLI:
-```bash
-npm i -g vercel
-```
-
-2. Deploy:
-```bash
-vercel
-```
-
-3. Set environment variables in Vercel Dashboard:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_PUBLISHABLE_KEY`
-
-### Manual Deployment
-
-1. Build the project: `npm run build`
-2. Upload the `dist` folder to your hosting provider
+1. Create a new Web Service on Render
+2. Connect your GitHub repository
+3. Set build command: `pip install -r requirements.txt`
+4. Set start command: `gunicorn backend_api:app`
+5. Deploy!
 
 ## 📁 Project Structure
 
 ```
-fake-review-frontend/
-├── src/
-│   ├── components/      # React components
-│   ├── hooks/          # Custom React hooks
-│   ├── integration/    # Supabase integration
-│   ├── lib/            # Utility functions
-│   ├── pages/          # Page components
-│   ├── App.tsx         # Main app component
-│   └── main.tsx        # Entry point
-├── public/             # Static assets
-├── supabase/           # Supabase config and migrations
-├── .env.example        # Environment variables template
-└── .gitignore         # Git ignore rules
+fake-review-backend/
+├── backend_api.py           # Main Flask application
+├── fake_review_model.pkl    # Trained ML model
+├── tfidf_vectorizer.pkl     # TF-IDF vectorizer
+├── requirements.txt         # Python dependencies
+├── Procfile                 # Render deployment config
+└── .gitignore              # Git ignore rules
 ```
-
-## 🎨 Tech Stack
-
-- **Framework:** React 18 + TypeScript
-- **Build Tool:** Vite
-- **Styling:** Tailwind CSS
-- **UI Components:** shadcn/ui
-- **Backend:** Supabase
-- **Charts:** Recharts
-- **Forms:** React Hook Form
-- **Routing:** React Router
 
 ## 🔒 Security
 
-- Never commit `.env` files to Git
-- Keep Supabase keys secure
-- Use environment variables for all sensitive data
-- Rotate credentials if exposed
-
-## 📝 Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
+- Never commit `.env` files
+- Keep model files secure
+- Use environment variables for sensitive data
 
 ## 📝 License
 
